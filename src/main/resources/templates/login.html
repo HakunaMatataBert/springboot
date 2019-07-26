@@ -1,0 +1,48 @@
+<!DOCTYPE html >
+<html  xmlns:th="http://www.thymeleleaf.org"
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>用户有登陆</title>
+    <script th:src="@{/jquery/jquery-1.11.2.min.js}" type="application/javascript"></script>
+</head>
+<script type="application/javascript">
+
+    function login() {
+        var contextPath = $('#contextPath').attr('href');
+        var num = $("#num").val();
+        var str = {"name":num};
+        $.ajax({
+            type:"post",
+            url:contextPath+"view/finish",//请求后台数据
+            dataType:"json",
+            data:str,
+            success:function(data){
+                var val = $('#text').append(data);
+
+            }
+        });
+
+    }
+
+</script>
+<body>
+<span th:text="${name}"></span><br>
+<span th:text="${datasize}"></span><br>
+<span th:text="${data}"></span><br>
+<span th:text="${#httpServletRequest.getContextPath()}">abc</span><br>
+
+<a th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() + '/'} "
+   id="contextPath"></a><br>
+
+
+<input id="num" type="text">
+<input type="button" onclick="login()" align="center" value="登陆"/>
+<input th:type="text" th:name="testval" th:value="dddddddddd">
+<a th:unless="${2!=2}">编辑</a>
+
+<a th:href="@{'/system/dis/user/detail'}" th:unless="${2!=2}">个人详情</a>
+<p id="text"></p>
+</body>
+
+</html>
